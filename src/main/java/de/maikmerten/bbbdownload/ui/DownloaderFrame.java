@@ -43,18 +43,18 @@ public class DownloaderFrame extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BBB Downloader");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("de/maikmerten/bbbdownload/ui/Bundle"); // NOI18N
+        setTitle(bundle.getString("AppTitle")); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Aufzeichnungs-URL, die BBB zur Verfügung stellt"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("UrlAsProvidedByBbb"))); // NOI18N
 
-        jTextFieldURL.setToolTipText("");
         jTextFieldURL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldURLActionPerformed(evt);
             }
         });
 
-        jButtonPaste.setText("Aus Zwischenablage einfügen");
+        jButtonPaste.setText(bundle.getString("PasteUrl")); // NOI18N
         jButtonPaste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPasteActionPerformed(evt);
@@ -62,10 +62,10 @@ public class DownloaderFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("Beispiel für eine URL in korrekter Form:");
+        jLabel1.setText(bundle.getString("ExampleForCorrectUrl")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setText("https://bbb.example.com/playback/presentation/2.0/playback.html?meetingId=be50897f1e04b6a776f9341944723f4e0a1877ef-1582889656605");
+        jLabel2.setText(bundle.getString("ExampleUrl")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,11 +101,11 @@ public class DownloaderFrame extends javax.swing.JFrame {
                 .addGap(47, 47, 47))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ausgabe-Datei (ZIP)"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("OutputZip"))); // NOI18N
 
-        jTextFieldFile.setText("bbb-downloaded-presentation.zip");
+        jTextFieldFile.setText(bundle.getString("DefaultZip")); // NOI18N
 
-        jButtonChoose.setText("Datei auswählen");
+        jButtonChoose.setText(bundle.getString("SelectFile")); // NOI18N
         jButtonChoose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonChooseActionPerformed(evt);
@@ -135,16 +135,16 @@ public class DownloaderFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Steuerung"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Control"))); // NOI18N
 
-        jButtonDownload.setText("Bitte lade die Aufzeichnung herunter, dankeschön!");
+        jButtonDownload.setText(bundle.getString("StartDownload")); // NOI18N
         jButtonDownload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDownloadActionPerformed(evt);
             }
         });
 
-        jCheckBoxSkipChat.setText("Chat *nicht* herunterladen");
+        jCheckBoxSkipChat.setText(bundle.getString("SkipChat")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
