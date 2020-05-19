@@ -1,6 +1,7 @@
 # bbb-downloader
 A Java-application to download presentations recorded in BigBlueButton. The tool creates ZIP-archives that contain all necessary files to host the downloaded recordings outside of BigBlueButton.
 
+![user interface](ui.png)
 
 ## Notice on licensing
 
