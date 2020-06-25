@@ -3,6 +3,7 @@ package de.maikmerten.bbbdownload.ui;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
@@ -11,12 +12,18 @@ import javax.swing.filechooser.FileSystemView;
  * @author maik
  */
 public class DownloaderFrame extends javax.swing.JFrame {
+    
+    private ResourceBundle bundle;
 
     /**
      * Creates new form DownloaderFrame
      */
     public DownloaderFrame() {
         initComponents();
+        bundle = ResourceBundle.getBundle("de/maikmerten/bbbdownload/ui/Bundle");
+        jComboBoxChatProcessing.addItem(bundle.getString("DownloadChat"));
+        jComboBoxChatProcessing.addItem(bundle.getString("AnonymizeChat"));
+        jComboBoxChatProcessing.addItem(bundle.getString("SkipChat"));
         setIdle(true);
     }
 
@@ -39,8 +46,8 @@ public class DownloaderFrame extends javax.swing.JFrame {
         jButtonChoose = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButtonDownload = new javax.swing.JButton();
-        jCheckBoxSkipChat = new javax.swing.JCheckBox();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jComboBoxChatProcessing = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("de/maikmerten/bbbdownload/ui/Bundle"); // NOI18N
@@ -144,8 +151,6 @@ public class DownloaderFrame extends javax.swing.JFrame {
             }
         });
 
-        jCheckBoxSkipChat.setText(bundle.getString("SkipChat")); // NOI18N
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -153,19 +158,17 @@ public class DownloaderFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jCheckBoxSkipChat)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jButtonDownload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE))
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
+                    .addComponent(jComboBoxChatProcessing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBoxSkipChat)
-                .addGap(40, 40, 40)
+                .addComponent(jComboBoxChatProcessing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(jButtonDownload)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,14 +209,15 @@ public class DownloaderFrame extends javax.swing.JFrame {
     private void jButtonDownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownloadActionPerformed
         String url = jTextFieldURL.getText();
         String filename = jTextFieldFile.getText();
-        boolean skipChat = jCheckBoxSkipChat.isSelected();
+        boolean skipChat = jComboBoxChatProcessing.getSelectedIndex() == 2;
+        boolean anonymizeChat = jComboBoxChatProcessing.getSelectedIndex() == 1;
 
         if (url.trim().length() == 0 || !url.contains("presentation") || filename.trim().length() == 0 || !filename.toLowerCase(Locale.getDefault()).endsWith(".zip")) {
             return;
         }
 
         setIdle(false);
-        Thread workthread = new DownloadThread(this, url, filename, skipChat);
+        Thread workthread = new DownloadThread(this, url, filename, skipChat, anonymizeChat);
         workthread.start();
     }//GEN-LAST:event_jButtonDownloadActionPerformed
 
@@ -282,13 +286,14 @@ public class DownloaderFrame extends javax.swing.JFrame {
         jButtonPaste.setEnabled(b);
         jProgressBar1.setVisible(!b);
         jProgressBar1.setIndeterminate(!b);
+        repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonChoose;
     private javax.swing.JButton jButtonDownload;
     private javax.swing.JButton jButtonPaste;
-    private javax.swing.JCheckBox jCheckBoxSkipChat;
+    private javax.swing.JComboBox<String> jComboBoxChatProcessing;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

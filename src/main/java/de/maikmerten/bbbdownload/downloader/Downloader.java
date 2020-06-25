@@ -22,6 +22,7 @@ public class Downloader {
     private String baseURL;
     private String recId;
     private boolean skipChat;
+    private boolean anonymizeChat;
 
     private String[] resources = {
         "captions.json",
@@ -41,10 +42,11 @@ public class Downloader {
         "deskshare/deskshare.mp4"
     };
 
-    public Downloader(String playerURL, boolean skipChat) {
+    public Downloader(String playerURL, boolean skipChat, boolean anonymizeChat) {
         this.baseURL = getBaseURL(playerURL);
         this.recId = getRecordingId(playerURL);
         this.skipChat = skipChat;
+        this.anonymizeChat = anonymizeChat;
     }
 
     private String getBaseURL(String playerURL) {
@@ -97,10 +99,10 @@ public class Downloader {
         // for later processing
         boolean isShapes = zipfilename.equals("shapes.svg");
         boolean isChat = zipfilename.equals("slides_new.xml");
-        
+
         zipfilename = "presentation/" + recId + "/" + zipfilename;
-        
-        if(skipChat && isChat) {
+
+        if (skipChat && isChat) {
             String popcornString = "<?xml version=\"1.0\"?>\n<popcorn>\n</popcorn>";
             zos.putNextEntry(new ZipEntry(zipfilename));
             zos.write(popcornString.getBytes("utf8"));
@@ -119,6 +121,14 @@ public class Downloader {
         }
 
         System.out.println("downloading " + zipfilename);
+
+        if (isChat && anonymizeChat) {
+            try {
+                is = ChatAnonymizer.anonymizeChat(is);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         ZipEntry ze = new ZipEntry(zipfilename);
         zos.putNextEntry(ze);
@@ -168,7 +178,7 @@ public class Downloader {
         String htmlcontent = "<html><meta http-equiv='refresh' content='0; URL=./playback/presentation/2.0/playback.html?meetingId=" + recId + "'></html>";
         zos.putNextEntry(new ZipEntry("index.html"));
         zos.write(htmlcontent.getBytes("utf8"));
-        
+
     }
 
     public void downloadPresentation(ZipOutputStream zos) throws Exception {
