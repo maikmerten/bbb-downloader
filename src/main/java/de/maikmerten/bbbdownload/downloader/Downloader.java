@@ -32,6 +32,9 @@ public class Downloader {
         "metadata.xml",
         "panzooms.xml",
         "presentation_text.json",
+        "external_videos.json",
+        "polls.json",
+        "notes.html",
         "slides_new.xml",
         "audio/audio.ogg",
         "audio/audio.webm",
@@ -77,6 +80,10 @@ public class Downloader {
         while (m.find()) {
             String slide = m.group();
             slide_resources.add(slide);
+            
+            // derive location of slide thumbnail
+            String thumbnail = slide.replaceAll("slide-", "thumbnails/thumb-");
+            slide_resources.add(thumbnail);
         }
 
         // find all slide Texts referenced in shapes.svg
