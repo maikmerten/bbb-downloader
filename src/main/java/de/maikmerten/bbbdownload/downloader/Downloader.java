@@ -178,7 +178,7 @@ public class Downloader {
         ZipEntry zentry = zis.getNextEntry();
         while (zentry != null) {
             if (!zentry.isDirectory()) {
-                ZipEntry newentry = new ZipEntry("/presentation/" + recId + "/" + zentry.getName());
+                ZipEntry newentry = new ZipEntry("presentation/" + recId + "/" + zentry.getName());
                 zos.putNextEntry(newentry);
 
                 int read = zis.read(buf);
