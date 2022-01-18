@@ -94,6 +94,14 @@ public class Downloader {
             slide_resources.add(text);
         }
 
+        // find all poll_result SVGs referenced in shapes.svg
+        Pattern poll_result_pattern = Pattern.compile("presentation/\\p{Alnum}{40}-\\d{13}/poll_result[0-9]+\\.svg");
+        m = poll_result_pattern.matcher(shapestring);
+        while (m.find()) {
+            String poll_result = m.group();
+            slide_resources.add(poll_result);
+        }
+
         for (String resource : slide_resources) {
             downloadIntoZip(baseURL + "/presentation/" + recId + "/" + resource, resource, zos);
         }
