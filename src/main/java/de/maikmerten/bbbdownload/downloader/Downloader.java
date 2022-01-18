@@ -178,7 +178,7 @@ public class Downloader {
         ZipEntry zentry = zis.getNextEntry();
         while (zentry != null) {
             if (!zentry.isDirectory()) {
-                ZipEntry newentry = new ZipEntry(zentry.getName());
+                ZipEntry newentry = new ZipEntry("/presentation/" + recId + "/" + zentry.getName());
                 zos.putNextEntry(newentry);
 
                 int read = zis.read(buf);
@@ -190,7 +190,7 @@ public class Downloader {
             zentry = zis.getNextEntry();
         }
 
-        String htmlcontent = "<html><meta http-equiv='refresh' content='0; URL=./playback/presentation/2.0/playback.html?meetingId=" + recId + "'></html>";
+        String htmlcontent = "<html><meta http-equiv='refresh' content='1; URL=./presentation/" + recId + "/index.html'></html>";
         zos.putNextEntry(new ZipEntry("index.html"));
         zos.write(htmlcontent.getBytes("utf8"));
 
