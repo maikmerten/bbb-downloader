@@ -86,6 +86,14 @@ public class Downloader {
             slide_resources.add(thumbnail);
         }
 
+        // find all slide SVGs referenced in shapes.svg
+        slides_pattern = Pattern.compile("presentation/\\p{Alnum}{40}-\\d{13}/svgs/slide[0-9]+\\.svg");
+        m = slides_pattern.matcher(shapestring);
+        while (m.find()) {
+                String slide = m.group();
+                slide_resources.add(slide);
+        }
+
         // find all slide Texts referenced in shapes.svg
         Pattern texts_pattern = Pattern.compile("presentation/\\p{Alnum}{40}-\\d{13}/textfiles/slide-[0-9]+\\.txt");
         m = texts_pattern.matcher(shapestring);
