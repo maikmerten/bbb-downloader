@@ -36,6 +36,8 @@ public class Downloader {
         "polls.json",
         "notes.html",
         "slides_new.xml",
+        "tldraw.json",
+        "layout.xml",
         "audio/audio.ogg",
         "audio/audio.webm",
         "video/webcams.webm",
